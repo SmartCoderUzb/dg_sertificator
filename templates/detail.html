@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ma'lumot (ID: {{ p.id }})</title>
+  <style>
+    :root{
+      --bg:#0f1115; --card:#151a23; --text:#e9eef9; --muted:#9aa3b2; --accent:#3b82f6; --border:#242b39;
+    }
+    body{margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif; background:var(--bg); color:var(--text);}
+    .wrap{max-width:900px; margin:40px auto; padding:0 16px;}
+    .card{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.25);}
+    h1{margin:0 0 12px 0; font-size:28px;}
+    .muted{color:var(--muted); font-size:14px;}
+    .grid{display:grid; grid-template-columns: 220px 1fr; gap:8px 16px; margin-top:18px;}
+    .label{color:var(--muted);}
+    .value{color:var(--text); word-break:break-word;}
+    .chip{display:inline-block; background:#1f2533; border:1px solid var(--border); padding:6px 10px; border-radius:999px; font-size:12px; margin-right:6px;}
+    a{color:var(--accent); text-decoration:none;}
+    a:hover{text-decoration:underline;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>{{ p.first_name }} {{ p.last_name }}</h1>
+      <div class="muted">ID: {{ p.id }}</div>
+
+      <div class="grid">
+        <div class="label">Otasini ismi</div><div class="value">{{ p.middle_name or "—" }}</div>
+        <div class="label">Ota/Ona telefon</div><div class="value">{{ p.parents_phone or "—" }}</div>
+
+        <div class="label">Viloyat</div><div class="value">{{ p.viloyat or "—" }}</div>
+        <div class="label">Tuman</div><div class="value">{{ p.tuman or "—" }}</div>
+        <div class="label">Manzil</div><div class="value">{{ p.manzil or "—" }}</div>
+
+        <div class="label">Yo'nalish</div><div class="value">{{ p.yonalish or "—" }}</div>
+        <div class="label">O‘qigan joyi</div><div class="value">{{ p.oqigan_joyi or "—" }}</div>
+        <div class="label">Tug‘ilgan kun</div><div class="value">{{ p.tugilgan_kun or "—" }}</div>
+
+        <div class="label">Jinsi</div><div class="value">{{ p.gender or "—" }}</div>
+        <div class="label">Telegram</div>
+        <div class="value">
+          {% if p.tg_username %}
+            {% if p.tg_username.startswith('@') %}
+              <a href="https://t.me/{{ p.tg_username[1:] }}" target="_blank">{{ p.tg_username }}</a>
+            {% else %}
+              <a href="https://t.me/{{ p.tg_username }}" target="_blank">@{{ p.tg_username }}</a>
+            {% endif %}
+          {% else %}
+            —
+          {% endif %}
+        </div>
+
+        <div class="label">Email</div>
+        <div class="value">
+          {% if p.email %}
+            <a href="mailto:{{ p.email }}">{{ p.email }}</a>
+          {% else %}
+            —
+          {% endif %}
+        </div>
+
+        <div class="label">About</div><div class="value">{{ p.about_me or "—" }}</div>
+      </div>
+
+      <div style="margin-top:18px;">
+        {% if p.yonalish %}<span class="chip">{{ p.yonalish }}</span>{% endif %}
+        {% if p.viloyat %}<span class="chip">{{ p.viloyat }}</span>{% endif %}
+        {% if p.tuman %}<span class="chip">{{ p.tuman }}</span>{% endif %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>
