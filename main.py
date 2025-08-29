@@ -68,7 +68,7 @@ class Person(Base):
     __tablename__ = "people"
 
     id = Column(
-        UUID(), 
+        UUID("id"), 
         primary_key=True, 
         default=uuid4, 
         unique=True, 
