@@ -70,7 +70,7 @@ class Person(Base):
     id = Column(
         String(100), 
         primary_key=True, 
-        default=uuid4, 
+        default=lambda: str(uuid4()), 
         unique=True, 
         nullable=False
     )
