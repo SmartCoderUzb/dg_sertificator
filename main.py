@@ -2,6 +2,7 @@ import os
 import secrets
 from datetime import date
 from typing import Optional
+from uuid import uuid4, UUID
 
 from fastapi import FastAPI, Depends, HTTPException, status, Request
 from fastapi.responses import HTMLResponse
@@ -66,31 +67,32 @@ def get_db():
 class Person(Base):
     __tablename__ = "people"
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(
+        UUID(as_uuid=True), 
+        primary_key=True, 
+        default=uuid4, 
+        unique=True, 
+        nullable=False
+    )
 
-    # ism, familiya, otasini ismi
-    first_name = Column(String(100), nullable=False)      # ism
-    last_name = Column(String(100), nullable=False)       # familiya
-    middle_name = Column(String(100), nullable=True)      # otasini ismi
+    first_name = Column(String(100), nullable=False)
+    last_name = Column(String(100), nullable=False)
+    middle_name = Column(String(100), nullable=True)
 
-    # ota + ona tel (bitta yoki ikkita raqamni bitta maydonga yozamiz)
     parents_phone = Column(String(200), nullable=True)
 
-    # vil, tum, manzil
-    viloyat = Column(String(120), nullable=True)          # vil
-    tuman = Column(String(120), nullable=True)            # tum
-    manzil = Column(String(255), nullable=True)           # manzil
+    viloyat = Column(String(120), nullable=True)
+    tuman = Column(String(120), nullable=True)
+    manzil = Column(String(255), nullable=True)
 
-    # yo'nalish, about me, o'qigan joyi
-    yonalish = Column(String(200), nullable=True)         # yo'nalish
-    about_me = Column(Text, nullable=True)                # about me
-    oqigan_joyi = Column(String(200), nullable=True)      # o'qigan joyi
+    yonalish = Column(String(200), nullable=True)
+    about_me = Column(Text, nullable=True)
+    oqigan_joyi = Column(String(200), nullable=True)
 
-    # t kun (tug‘ilgan kun), gender, tg username, email
-    tugilgan_kun = Column(Date, nullable=True)            # t kun
-    gender = Column(String(20), nullable=True)            # gender
-    tg_username = Column(String(100), nullable=True)      # tg username (e.g. @username)
-    email = Column(String(200), nullable=True)            # email
+    tugilgan_kun = Column(Date, nullable=True)
+    gender = Column(String(20), nullable=True)
+    tg_username = Column(String(100), nullable=True)
+    email = Column(String(200), nullable=True)        # email
 
 # Create tables on startup
 Base.metadata.create_all(bind=engine)
