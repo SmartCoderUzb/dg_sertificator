@@ -18,25 +18,31 @@ from dotenv import load_dotenv
 # =========================
 # Config
 # =========================
+
 load_dotenv()
+
 DB_URL = os.getenv("DB_URL", "sqlite:///./data.db")
 ADMIN_USER = os.getenv("ADMIN_USER", "admin")
-ADMIN_PASS = os.getenv("ADMIN_PASS", "admin123")
+ADMIN_PASS = os.getenv("ADMIN_PASS", "wM732s]WM5MJ")
 
 print(ADMIN_USER, ADMIN_PASS)
 engine = create_engine(DB_URL, connect_args={"check_same_thread": False} if DB_URL.startswith("sqlite") else {})
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
 Base = declarative_base()
-app = FastAPI(title="People API", version="1.0.0")
+app = FastAPI(
+    title="Django sertificator API", 
+    version="1.0.0", 
+    docs_url="/izzatillo_v1_docs/",
+    debug=False,
+    openapi_url="/jsonfile_v1.json"    
+)
+
 templates = Jinja2Templates(directory="templates")
 
 security = HTTPBasic()
 
 def require_auth(credentials: HTTPBasicCredentials = Depends(security)):
-    """
-    Simple HTTP Basic authentication.
-    """
     correct_user = secrets.compare_digest(credentials.username, ADMIN_USER)
     correct_pass = secrets.compare_digest(credentials.password, ADMIN_PASS)
     if not (correct_user and correct_pass):
