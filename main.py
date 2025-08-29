@@ -138,7 +138,7 @@ def create_person(payload: PersonCreate, _: str = Depends(require_auth), db: Ses
     return person
 
 @app.get("/api/students/{person_id}", response_model=PersonOut)
-def get_person(person_id: int, _: str = Depends(require_auth), db: Session = Depends(get_db)):
+def get_person(person_id: str, _: str = Depends(require_auth), db: Session = Depends(get_db)):
     person = db.get(Person, person_id)
     if not person:
         raise HTTPException(status_code=404, detail="Not found")
