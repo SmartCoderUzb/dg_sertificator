@@ -121,7 +121,7 @@ class PersonCreate(BaseModel):
     email: Optional[EmailStr] = Field(None, description="email")
 
 class PersonOut(PersonCreate):
-    id: int
+    id: str
 
     class Config:
         from_attributes = True  # Pydantic v2 compatible (ORM mode)
