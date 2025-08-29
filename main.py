@@ -32,7 +32,7 @@ SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
 Base = declarative_base()
 app = FastAPI(
-    title="Django sertificator API", 
+    title="Dj sertificator API", 
     version="1.0.0", 
     docs_url="/izzatillo_v1_docs/",
     debug=False,
