@@ -145,7 +145,7 @@ def get_person(person_id: str, _: str = Depends(require_auth), db: Session = Dep
     return person
 
 @app.get("/students/{person_id}", response_class=HTMLResponse)
-def person_detail_page(person_id: str, request: Request, _: str = Depends(require_auth), db: Session = Depends(get_db)):
+def person_detail_page(person_id: str, request: Request, db: Session = Depends(get_db)):
     person = db.get(Person, person_id)
     if not person:
         raise HTTPException(status_code=404, detail="Not found")
